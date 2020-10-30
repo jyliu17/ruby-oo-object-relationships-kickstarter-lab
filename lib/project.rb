@@ -1,23 +1,17 @@
 class Project
-    attr_reader :title
-  
-    def initialize(title)
-      @title = title
-    end
-  
-    def add_backer(backer)
-      ProjectBacker.new(self, backer)
-    end
 
-    def backers
-        backers = []
-        ProjectBacker.all.map do |project_backer|
-            if project_backer.project == self
+  attr_reader :title
+  def initialize(title)
+    @title = title
+  end
 
-             backers << project_backer.backer
-            
-            end
-        end   
-        backers
-    end
+  def add_backer(backer)
+    ProjectBacker.new(self, backer)
+  end
+
+  def backers
+    new_array = ProjectBacker.all.select {|pb|pb.project == self}
+    new_array.map {|pb| pb.backer}
+  end
+  
 end
